@@ -29,6 +29,16 @@ func (f MyFloat) Abs() float64 {
 	return float64(f)
 }
 
+// (4/26) получатели и указатели
+func (v* Vertex) AbsThird() float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+func (v* Vertex) Scale(f float64) {
+	v.X = v.X * f
+	v.Y = v.Y * f
+}
+
 func main() {
 	// (1/26) методы
 	v := Vertex{X: 3, Y: 4}
@@ -40,4 +50,8 @@ func main() {
 	// (3/26) методы, продложение
 	f := MyFloat(-math.Sqrt2)
 	fmt.Println(f.Abs())
+
+	// (4/26) получатели и указатели
+	v.Scale(10)
+	fmt.Println(v.AbsThird())
 }
