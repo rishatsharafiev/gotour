@@ -49,6 +49,18 @@ func ScaleForth(v *Vertex, f float64) {
 	v.Y = v.Y * f
 }
 
+// (6/26) методы и косвенная адресация указателей
+func (v *Vertex) ScaleFifth(f float64) {
+	v.X = v.X * f
+	v.Y = v.Y * f
+}
+
+func ScaleFuncFifth(v *Vertex, f float64) {
+	v.X = v.X * f
+	v.Y = v.Y * f
+}
+
+
 func main() {
 	// (1/26) методы
 	v := Vertex{X: 3, Y: 4}
@@ -69,4 +81,15 @@ func main() {
 	v = Vertex{3, 4}
 	ScaleForth(&v, 10)
 	fmt.Println(AbsForth(v))
+
+	// (6/26) методы и косвенная адресация указателей
+	v = Vertex{3, 4}
+	v.ScaleFifth(2)
+	ScaleFuncFifth(&v, 10)
+
+	p := &Vertex{4, 3}
+	p.ScaleFifth(3)
+	ScaleFuncFifth(p, 8)
+
+	fmt.Println(v, p)
 }
