@@ -39,6 +39,16 @@ func (v* Vertex) Scale(f float64) {
 	v.Y = v.Y * f
 }
 
+// (5/26) указатели и функции
+func AbsForth(v Vertex) float64 {
+	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+func ScaleForth(v *Vertex, f float64) {
+	v.X = v.X * f
+	v.Y = v.Y * f
+}
+
 func main() {
 	// (1/26) методы
 	v := Vertex{X: 3, Y: 4}
@@ -54,4 +64,9 @@ func main() {
 	// (4/26) получатели и указатели
 	v.Scale(10)
 	fmt.Println(v.AbsThird())
+
+	// (5/26) указатели и функции
+	v = Vertex{3, 4}
+	ScaleForth(&v, 10)
+	fmt.Println(AbsForth(v))
 }
