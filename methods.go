@@ -14,13 +14,30 @@ func (v Vertex) Abs () float64 {
 	return math.Sqrt(v.X*v.X + v.Y*v.Y)
 }
 
+// (2/26) методы и функции
 func AbsSecond (v Vertex) float64 {
 	return math.Sqrt(v.X*v.X + v.Y*v.Y)
+}
+
+// (3/26) методы, продложение
+type MyFloat float64
+
+func (f MyFloat) Abs() float64 {
+	if f < 0 {
+		return float64(-f)
+	}
+	return float64(f)
 }
 
 func main() {
 	// (1/26) методы
 	v := Vertex{X: 3, Y: 4}
 	fmt.Println(v.Abs())
+
+	// (2/26) методы и функции
 	fmt.Println(AbsSecond(v))
+
+	// (3/26) методы, продложение
+	f := MyFloat(-math.Sqrt2)
+	fmt.Println(f.Abs())
 }
