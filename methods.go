@@ -251,6 +251,18 @@ func (e ErrNegativeSqrt) Error() string {
 	return fmt.Sprint("cannot Sqrt negative number: ", float64(e))
 }
 
+// (22/26) упражнение: reader
+type MyReader struct{}
+
+func (r MyReader) Read(b []byte) (int, error) {
+	if len(b) == 0 {
+		return 0, fmt.Errorf("Buffer is not long enough")
+	}
+
+	b[0] = 'A'
+	return 1, nil
+}
+
 func main() {
 	// (1/26) методы
 	fmt.Println("-------")
@@ -441,6 +453,8 @@ func main() {
 	fmt.Println(SqrtWithError(-2))
 
 	// (21/26) Reader
+	fmt.Println("-------")
+
 	r := strings.NewReader("Hello, Reader!")
 
 	b := make([]byte, 8)
@@ -451,5 +465,18 @@ func main() {
 		if err == io.EOF {
 			break
 		}
+	}
+
+	// (22/26) упражнение: reader
+	fmt.Println("-------")
+
+	myReader := MyReader{}
+	storeA := make([]byte, 1)
+	for i:=0; i < 3; i ++ {
+		_, err := myReader.Read(storeA)
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(string(storeA[0]))
 	}
 }
