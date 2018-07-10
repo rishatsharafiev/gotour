@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 	"io"
+	"os"
 )
 
 // (1/26) методы
@@ -263,6 +264,29 @@ func (r MyReader) Read(b []byte) (int, error) {
 	return 1, nil
 }
 
+// (23/26) упражнение: rot13Reader
+type rot13Reader struct {
+	r io.Reader
+}
+
+func rot13(b byte) byte {
+	if b <= byte('z') && b >= byte('n') || b <= byte('Z') && b >= byte('N')  {
+		return b - 13
+	} else if b <= byte('m') && b >= byte('a') || b <= byte('M') && b >= byte('A') {
+		return b + 13
+	}
+	return b
+}
+
+func (rR *rot13Reader) Read(b []byte) (n int, err error) {
+	n, err = rR.r.Read(b)
+	for i, v := range b {
+		b[i] = rot13(v)
+	}
+	return n, err
+}
+
+
 func main() {
 	// (1/26) методы
 	fmt.Println("-------")
@@ -479,4 +503,11 @@ func main() {
 		}
 		fmt.Println(string(storeA[0]))
 	}
+
+	// (23/26) упражнение: rot13Reader
+	fmt.Println("-------")
+
+	s23 := strings.NewReader("Lbh penpxrq gur pbqr!")
+	r23 := rot13Reader{s23}
+	io.Copy(os.Stdout, &r23)
 }
