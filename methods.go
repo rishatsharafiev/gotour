@@ -178,6 +178,15 @@ func do(i interface{}) {
 	}
 }
 
+// (17/26) Stringers
+type Person struct {
+	Name string
+	Age  int
+}
+
+func (p Person) String() string {
+	return fmt.Sprintf("%v (%v years)", p.Name, p.Age)
+}
 
 func main() {
 	// (1/26) методы
@@ -317,7 +326,7 @@ func main() {
 
 
 	// (15/26) утверждение типа
-	fmt.Println("-------1")
+	fmt.Println("-------")
 
 	var i6 interface{} = "hello"
 
@@ -335,8 +344,13 @@ func main() {
 
 	// (16/26) switch с типами
 	fmt.Println("-------")
-
 	do(21)
 	do("hello")
 	do(true)
+
+	// (17/26) Stringers
+	fmt.Println("-------")
+	a := Person{"Arthur Dent", 42}
+	z := Person{"Zaphod Beeblebrox", 9001}
+	fmt.Println(a, z)
 }
