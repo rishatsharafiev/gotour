@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"io"
 )
 
 // (1/26) методы
@@ -250,7 +251,6 @@ func (e ErrNegativeSqrt) Error() string {
 	return fmt.Sprint("cannot Sqrt negative number: ", float64(e))
 }
 
-
 func main() {
 	// (1/26) методы
 	fmt.Println("-------")
@@ -439,4 +439,17 @@ func main() {
 
 	fmt.Println(SqrtWithError(2))
 	fmt.Println(SqrtWithError(-2))
+
+	// (21/26) Reader
+	r := strings.NewReader("Hello, Reader!")
+
+	b := make([]byte, 8)
+	for {
+		n, err := r.Read(b)
+		fmt.Printf("n = %v err = %v b = %v\n", n, err, b)
+		fmt.Printf("b[:n] = %q\n", b[:n])
+		if err == io.EOF {
+			break
+		}
+	}
 }
