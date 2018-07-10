@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"strconv"
 	"strings"
+	"time"
 )
 
 // (1/26) методы
@@ -201,6 +202,55 @@ func (b IPAddr) String () string {
 	return strings.Join(s, ".")
 }
 
+// (19/26) ошибки
+type MyError struct {
+	When time.Time
+	What string
+}
+
+func (e *MyError) Error() string {
+	return fmt.Sprintf("at %v, %s",
+		e.When, e.What)
+}
+
+func run() error {
+	return &MyError{
+		time.Now(),
+		"it didn't work",
+	}
+}
+
+// (20/26) упражнение: ошибки
+type ErrNegativeSqrt float64
+
+func RoundWithError(x float64, unit float64) float64 {
+	division := math.Pow(10, unit)
+	return math.Ceil(x*division) / division
+}
+
+func SqrtWithError(x float64) (float64, error) {
+	if x < 0 {
+		return 0, ErrNegativeSqrt(x)
+	}
+	z := 0.5
+	k := 0.0
+	decimals := 2.0
+	for i := 0; i < 8000; i++ {
+		k = z - (z*z-x)/2*z
+		if RoundWithError(k, decimals) == RoundWithError(z, decimals) {
+			fmt.Printf("iteration: %d\n", i)
+			break
+		}
+		z = k
+	}
+	return z, nil
+}
+
+func (e ErrNegativeSqrt) Error() string {
+	return fmt.Sprint("cannot Sqrt negative number: ", float64(e))
+}
+
+
 func main() {
 	// (1/26) методы
 	fmt.Println("-------")
@@ -377,4 +427,16 @@ func main() {
 	for name, ip := range hosts {
 		fmt.Printf("%v: %v\n", name, ip)
 	}
+
+	// (19/26) ошибки
+	fmt.Println("-------")
+	if err := run(); err != nil {
+		fmt.Println(err)
+	}
+
+	// (20/26) упражнение: ошибки
+	fmt.Println("-------")
+
+	fmt.Println(SqrtWithError(2))
+	fmt.Println(SqrtWithError(-2))
 }
