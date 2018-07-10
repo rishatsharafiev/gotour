@@ -3,6 +3,8 @@ package main
 import (
 	"math"
 	"fmt"
+	"strconv"
+	"strings"
 )
 
 // (1/26) методы
@@ -188,6 +190,17 @@ func (p Person) String() string {
 	return fmt.Sprintf("%v (%v years)", p.Name, p.Age)
 }
 
+// (18/26) упражнение: Stringers
+type IPAddr [4]byte
+
+func (b IPAddr) String () string {
+	s := make([]string, len(b))
+	for i := range b {
+		s[i] = strconv.Itoa(int(b[i]))
+	}
+	return strings.Join(s, ".")
+}
+
 func main() {
 	// (1/26) методы
 	fmt.Println("-------")
@@ -353,4 +366,15 @@ func main() {
 	a := Person{"Arthur Dent", 42}
 	z := Person{"Zaphod Beeblebrox", 9001}
 	fmt.Println(a, z)
+
+	// (18/26) упражнение: Stringers
+	fmt.Println("-------")
+
+	hosts := map[string]IPAddr{
+		"loopback":  {127, 0, 0, 1},
+		"googleDNS": {8, 8, 8, 8},
+	}
+	for name, ip := range hosts {
+		fmt.Printf("%v: %v\n", name, ip)
+	}
 }
