@@ -8,6 +8,7 @@ import (
 	"time"
 	"io"
 	"os"
+	"image"
 )
 
 // (1/26) методы
@@ -278,6 +279,7 @@ func rot13(b byte) byte {
 	return b
 }
 
+
 func (rR *rot13Reader) Read(b []byte) (n int, err error) {
 	n, err = rR.r.Read(b)
 	for i, v := range b {
@@ -510,4 +512,12 @@ func main() {
 	s23 := strings.NewReader("Lbh penpxrq gur pbqr!")
 	r23 := rot13Reader{s23}
 	io.Copy(os.Stdout, &r23)
+	fmt.Println("")
+
+	// (24/26) изображения
+	fmt.Println("-------")
+
+	m := image.NewRGBA(image.Rect(0, 0, 100, 100))
+	fmt.Println(m.Bounds())
+	fmt.Println(m.At(0, 0).RGBA())
 }
