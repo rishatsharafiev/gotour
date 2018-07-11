@@ -26,9 +26,10 @@ func pow(x, n, lim float64) float64 {
 	return lim
 }
 
+// (8/14)
 func Round(x float64, unit float64) float64 {
-	devision := math.Pow(10, unit)
-	return math.Ceil(x*devision) / devision
+	division := math.Pow(10, unit)
+	return math.Ceil(x*division) / division
 }
 
 func Sqrt(x float64) float64 {
@@ -53,9 +54,9 @@ func main() {
 	// завершающий блок: выполняется в конце каждой итерации
 	// (2/14)
 	// блоки инициализации и завершения опциональны.
-	sum := 1
-	for sum < 1000 {
-		sum += sum
+	sum := 0
+	for i := 0; sum < 1000; i++ {
+		sum += i
 	}
 	fmt.Println(sum)
 
