@@ -9,6 +9,8 @@ import (
 	"io"
 	"os"
 	"image"
+	"golang.org/x/tour/pic"
+	"image/color"
 )
 
 // (1/26) методы
@@ -288,6 +290,29 @@ func (rR *rot13Reader) Read(b []byte) (n int, err error) {
 	return n, err
 }
 
+// (25/26) упражнения: изображения
+type Image struct{
+	width  int
+	height int
+}
+
+func (img Image) ColorModel() color.Model {
+	return color.RGBAModel
+}
+
+func (img Image) Bounds() image.Rectangle {
+	return image.Rect(0, 0, img.width, img.height)
+}
+
+func (img Image) At(x, y int) color.Color {
+	img_func := func(x, y int) uint8 {
+		//return uint8(x*y)
+		//return uint8((x+y) / 2)
+		return uint8(x ^ y)
+	}
+	v := img_func(x, y)
+	return color.RGBA{v, v, 255, 255}
+}
 
 func main() {
 	// (1/26) методы
@@ -520,4 +545,8 @@ func main() {
 	m := image.NewRGBA(image.Rect(0, 0, 100, 100))
 	fmt.Println(m.Bounds())
 	fmt.Println(m.At(0, 0).RGBA())
+
+	// (25/26) упражнения: изображения
+	m25 := Image{256, 100}
+	pic.ShowImage(m25)
 }
